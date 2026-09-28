@@ -69,3 +69,96 @@ INSERT INTO Students VALUES
 (8,'Meena','Civil',62),
 (9,'Ravi','Civil',88),
 (10,'Divya','Electronics',45);
+
+-- 1. Total number of employees in each department
+select department, count(*) as total_employes from employee
+group by department;
+
+-- 2.	Find the average salary of employees in each department. 
+select department, avg(salary) as average_salary from employee
+group by department;
+
+-- 3.	Display departments having more than one employee. 
+select department, count(*) as total_employes from employee
+group by department
+having total_employes > 1;
+
+-- 4. highest salary in each department
+select department, max(salary) as highest_salary from employee
+group by department;
+
+-- 5. lowest salary in each department
+select department, min(salary) as lowest_salary from employee
+group by department;
+
+-- 6. departments whose average salary is greater than 50,000
+select department, avg(salary) as average_salary from employee
+group by department
+having avg(salary) > 50000;
+
+-- 7. total salary expenditure for each department
+select department, sum(salary) as total_salary from employee
+group by department;
+
+-- 8. all employees sorted by salary descending
+select * from employee
+order by salary desc;
+
+-- 9. employees sorted by department and then salary descending
+select * from employee
+order by department asc, salary desc;
+
+-- 10. cities that have more than one employee
+select city, count(*) as total_employes from employee
+group by city
+having count(*) > 1;
+
+-- 11. total salary paid in each city
+select city, sum(salary) as total_salary from employee
+group by city;
+
+-- 12. departments ordered by total salary expenditure
+select department, sum(salary) as total_salary from employee
+group by department
+order by total_salary desc;
+
+-- 13. number of employees in each department whose salary is greater than 50,000
+select department, count(*) as total_employes from employee
+where salary > 50000
+group by department;
+
+-- 14. difference between highest and lowest salary in each department
+select department, max(salary) - min(salary) as salary_difference from employee
+group by department;
+
+-- 15. top 3 highest-paid employees
+select * from employee
+order by salary desc
+limit 3;
+
+-- 16. Find the total order amount for each customer
+select c.customer_id, c.customer_name, sum(amount) as total_order_amount from customers c
+join orders o on c.customer_id = o.customer_id
+group by c.customer_id, c.customer_name;
+
+-- 17. Find customers who have placed more than 3 orders
+select c.customer_id, c.customer_name, count(o.order_id) as total_orders from customers c
+join orders o on c.customer_id = o.customer_id
+group by c.customer_id, c.customer_name
+having count(o.order_id) > 3;
+
+-- 18. Find the average order amount for each customer
+select c.customer_id, c.customer_name, avg(o.amount) as average_order_amount from customers c
+join orders o on c.customer_id = o.customer_id
+group by c.customer_id, c.customer_name;
+
+-- 19. Find the highest order amount placed by each customer
+select c.customer_id, c.customer_name, max(o.amount) as highest_order_amount from customers c
+join orders o on c.customer_id = o.customer_id
+group by c.customer_id, c.customer_name;
+
+-- 20. Display customers sorted by their total purchase amount
+select c.customer_id, c.customer_name, sum(o.amount) as total_purchase_amount from customers c
+join orders o on c.customer_id = o.customer_id
+group by c.customer_id, c.customer_name
+order by total_purchase_amount desc;
